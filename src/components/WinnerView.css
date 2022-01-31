@@ -1,0 +1,13 @@
+@import "./App.css";
+@import url("https://fonts.googleapis.com/css2?family=Titan+One&display=swap");
+
+.WinnerView {
+  margin-top: 20px;
+  text-align: center;
+  height: 15vh;
+}
+
+.WinnerView-Title {
+  font-family: "Titan One";
+  height: 15vh;
+}

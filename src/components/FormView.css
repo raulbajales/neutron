@@ -1,0 +1,25 @@
+@import './App.css';
+@import url('https://fonts.googleapis.com/css2?family=Titan+One&display=swap');
+
+.Form-Game {
+    text-align: center;
+}
+
+.Form-Game-Header {
+    font-family: 'Titan One';
+    background-color: white;
+    height: 15vh;
+}
+
+.Form-Game-Content {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 50vh;
+}
+
+.Form-Game-Footer {
+    background-color: black;
+    color: white;
+    height: 10vh;
+}
