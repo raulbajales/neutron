@@ -8,7 +8,7 @@ import { NeutronToken } from "./tokens/NeutronToken";
 import { WhiteToken } from "./tokens/WhiteToken";
 import { BlackToken } from "./tokens/BlackToken";
 import { TokenColor } from "../logic/Player";
-import { Direction } from "../logic/Direction";
+import { discoverDirection, Direction } from "../logic/Direction";
 
 export const BoardView = (props: { game: Game; updateState: () => void }) => {
   let neutronDragAllowed = props.game.pieceToMove === PieceToMove.Neutron;
@@ -19,43 +19,11 @@ export const BoardView = (props: { game: Game; updateState: () => void }) => {
     props.game.playerTurn!.tokenColor! === TokenColor.Black &&
     props.game.pieceToMove === PieceToMove.Token;
 
-  const discoverDirection = (
-    rowMove: number,
-    colMove: number
-  ): Direction | undefined => {
-    if (rowMove < 0 && colMove === 0) {
-      return Direction.Up;
-    }
-    if (rowMove < 0 && colMove > 0) {
-      return Direction.UpRight;
-    }
-    if (rowMove === 0 && colMove > 0) {
-      return Direction.Right;
-    }
-    if (rowMove > 0 && colMove > 0) {
-      return Direction.DownRight;
-    }
-    if (rowMove > 0 && colMove === 0) {
-      return Direction.Down;
-    }
-    if (rowMove > 0 && colMove < 0) {
-      return Direction.DownLeft;
-    }
-    if (rowMove === 0 && colMove < 0) {
-      return Direction.Left;
-    }
-    if (rowMove < 0 && colMove < 0) {
-      return Direction.UpLeft;
-    }
-    return undefined;
-  };
-
   const handleNeutronDrop = (e: DraggableEvent, data: DraggableData) => {
     let direction: Direction | undefined = discoverDirection(
       Math.round(data.y / 71),
       Math.round(data.x / 71)
     );
-    console.log("moveNeutron", Direction[direction!], props.game.playerTurn!);
     direction && props.game.moveNeutron(props.game.playerTurn!, direction);
     props.updateState();
   };
@@ -66,15 +34,6 @@ export const BoardView = (props: { game: Game; updateState: () => void }) => {
       Math.round(data.x / 71)
     );
     let parts = data.node.id.split("|");
-    console.log(
-      "tokenDrop",
-      direction,
-      TokenColor[props.game.playerTurn!.tokenColor!],
-      props.game.playerTurn!,
-      Number(parts[1]),
-      Number(parts[2]),
-      props.game.board
-    );
     direction &&
       props.game.moveToken(props.game.playerTurn!, {
         row: Number(parts[1]),
