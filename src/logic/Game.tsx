@@ -16,6 +16,7 @@ export class Game {
   playerTurn?: Player;
   pieceToMove?: PieceToMove;
   running?: Boolean;
+  moves: number = 0;
 
   constructor(playerOne?: Player, playerTwo?: Player) {
     if (!(playerOne && playerTwo))
@@ -49,6 +50,7 @@ export class Game {
     if (this.playerTurn !== player) throw Error("Not your turn!");
     if (this.pieceToMove !== PieceToMove.Neutron) throw Error("Invalid move!");
     this.board!.moveNeutron(neutronMove);
+    this.moves++;
     var [row] = this.board!.findNeutron();
     if (
       (row === 0 && player.tokenColor === TokenColor.White) ||
@@ -77,6 +79,7 @@ export class Game {
       )
     )
       throw Error("Invalid token move");
+    this.moves++;
     this.board!.moveToken(player.tokenColor, tokenMove);
     if (!this.board!.canMoveNeutron()) {
       this.winner = player;
