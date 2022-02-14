@@ -52,11 +52,12 @@ export class Game {
     this.board!.moveNeutron(neutronMove);
     this.moves++;
     var [row] = this.board!.findNeutron();
-    if (
-      (row === 0 && player.tokenColor === TokenColor.White) ||
-      (row === 4 && player.tokenColor === TokenColor.Black)
-    ) {
-      this.winner = player;
+    if (row === 0 || row === 4) {
+      this.winner =
+        this.playerOne!.tokenColor ===
+        (row === 0 ? TokenColor.White : TokenColor.Black)
+          ? this.playerOne!
+          : this.playerTwo!;
       this.running = false;
     } else {
       this.pieceToMove = PieceToMove.Token;
